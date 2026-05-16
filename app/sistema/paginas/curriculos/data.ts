@@ -4,8 +4,8 @@ export interface Resume {
   role: string;
   summary: string;
   location: string;
-  experience: string;
-  education: string;
+  experience: { value: string }[];
+  education: { value: string }[];
   skills: string[];
   email: string;
   phone: string;
@@ -23,9 +23,12 @@ export const resumes: Resume[] = [
     summary:
       "Criadora de interfaces responsivas e acessíveis com foco em experiência do usuário.",
     location: "São Paulo, SP",
-    experience:
-      "5 anos de experiência em Next.js, React, Tailwind CSS e integrações com APIs REST.",
-    education: "Bacharel em Ciência da Computação pela USP",
+    experience: [
+      { value: "5 anos de experiência em Next.js, React, Tailwind CSS e integrações com APIs REST." }
+    ],
+    education: [
+      { value: "Bacharel em Ciência da Computação pela USP" }
+    ],
     skills: ["Next.js", "React", "Tailwind", "TypeScript", "Yup"],
     email: "marina.souza@example.com",
     phone: "+55 (11) 98765-4321",
@@ -41,9 +44,12 @@ export const resumes: Resume[] = [
     summary:
       "Profissional com visão estratégica e comunicação clara entre design e desenvolvimento.",
     location: "Rio de Janeiro, RJ",
-    experience:
-      "4 anos trabalhando com produtos digitais e gerenciamento de requisitos.",
-    education: "MBA em Gestão de Produtos Digitais pela FGV",
+    experience: [
+      { value: "4 anos trabalhando com produtos digitais e gerenciamento de requisitos." }
+    ],
+    education: [
+      { value: "MBA em Gestão de Produtos Digitais pela FGV" }
+    ],
     skills: ["Product", "UX", "Roadmap", "Miro", "Figma"],
     email: "gabriel.lima@example.com",
     phone: "+55 (21) 99876-5432",
@@ -59,9 +65,12 @@ export const resumes: Resume[] = [
     summary:
       "Especialista em pipelines, banco de dados e visualização de indicadores.",
     location: "Belo Horizonte, MG",
-    experience:
-      "6 anos com ETL, AWS e automação de relatórios para equipes de dados.",
-    education: "Engenharia de Computação pela UFMG",
+    experience: [
+      { value: "6 anos com ETL, AWS e automação de relatórios para equipes de dados." }
+    ],
+    education: [
+      { value: "Engenharia de Computação pela UFMG" }
+    ],
     skills: ["Python", "SQL", "AWS", "Airflow", "Power BI"],
     email: "beatriz.oliveira@example.com",
     phone: "+55 (31) 91234-5678",

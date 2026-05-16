@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sistema de Currículos
 
-## Getting Started
+Projeto em Next.js para gerenciar currículos com páginas de:
+- listagem
+- detalhes
+- novo currículo
 
-First, run the development server:
+## Tech Stack
+- Next.js 16.2.6
+- Tailwind CSS v4
+- React Hook Form + Yup
+- Sonner (toasts)
+- React Icons
+- React Input Mask
 
+## Como rodar
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
+- ✅ Formulário dinâmico com Field Arrays (useFieldArray)
+- ✅ Validação Yup em campos dinâmicos
+- ✅ Persistência simulada com localStorage
+- ✅ Tema azul/branco/preto
+- ✅ Responsivo
+- ✅ Ícones funcionais
+- ✅ Filtro e busca em tempo real (Nome/Cargo com debounce)
+- ✅ Estados de botão (hover, focus-visible, disabled)
+- ✅ Navegação com link ativo (active state)
+- ✅ Feedback específico de erros Yup no toast
+- ✅ Navegação funcional (botões levam para currículos e início)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estrutura
+- `/` - Landing page
+- `/sistema/paginas/curriculos` - Lista de currículos
+- `/sistema/paginas/curriculos/[id]` - Detalhes do currículo
+- `/sistema/paginas/curriculos/novo` - Formulário de cadastro
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Navegação
+- **Início**: Página principal com apresentação do sistema
+- **Currículos**: Lista completa de currículos com busca em tempo real
+- **Contato**: Retorna à página inicial (mesmo que Início)
 
-## Learn More
+## Desafios Técnicos Implementados
+- Gerenciamento de Formulário Dinâmico (Experiência Profissional e Formação Acadêmica)
+- Campos dinâmicos com validação individual
+- Adicionar/remover itens dinamicamente
+- Persistência de arrays no localStorage
+- Filtro e busca em tempo real com debounce (300ms)
+- Estados avançados de botão (hover, focus, disabled, loading)
+- Navegação com active state usando usePathname
+- Feedback de erro específico do Yup nos toasts
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Status
+Projeto completo e funcional, pronto para entrega.

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FiChevronRight, FiMapPin } from "react-icons/fi";
+import { FiChevronRight, FiMapPin, FiSearch } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { loadStoredResumes } from "../../../lib/storage";
 import { resumes, type Resume } from "./data";
@@ -11,6 +11,8 @@ import { Card } from "../../../components/ui/card";
 
 export default function CurriculosPage() {
   const [resumeList, setResumeList] = useState<Resume[]>(resumes);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>("");
 
   useEffect(() => {
     const stored = loadStoredResumes();
@@ -25,6 +27,20 @@ export default function CurriculosPage() {
 
     setResumeList(Array.from(merged.values()));
   }, []);
+
+  // Debounce effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300); // 300ms debounce
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  const filteredResumes = resumeList.filter(resume =>
+    resume.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+    resume.role.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+  );
 
   return (
     <div className="bg-slate-950 py-16 text-slate-100">
@@ -42,8 +58,22 @@ export default function CurriculosPage() {
           </Link>
         </div>
 
+        {/* Search Input */}
+        <div className="mb-8">
+          <div className="relative max-w-md">
+            <FiSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Buscar por nome ou cargo..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full rounded-lg border border-slate-700 bg-slate-900 py-3 pl-10 pr-4 text-slate-100 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+
         <div className="grid gap-6 md:grid-cols-2">
-          {resumeList.map((resume) => (
+          {filteredResumes.map((resume) => (
             <Card key={resume.id} className="space-y-5 border border-slate-800 bg-slate-900 text-slate-100 shadow-lg shadow-blue-950/20">
               <div className="flex items-center gap-4">
                 <Image

@@ -4,30 +4,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { FiGlobe, FiLayers, FiMail, FiMapPin, FiPhone, FiShield, FiUser } from "react-icons/fi";
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { getResumeById, type Resume } from "../data";
 import { getStoredResumeById } from "../../../../lib/storage";
 import { Button } from "../../../../components/ui/button";
 import { Card } from "../../../../components/ui/card";
 
-interface Props {
-  params: {
-    id: string;
-  };
-}
-
-export default function ResumeDetailsPage({ params }: Props) {
+export default function ResumeDetailsPage() {
+  const params = useParams();
+  const resumeId = Array.isArray(params?.id) ? params.id[0] : params?.id;
   const [resume, setResume] = useState<Resume | null | undefined>(undefined);
 
   useEffect(() => {
-    const storedResume = getStoredResumeById(params.id);
+    if (!resumeId) {
+      setResume(null);
+      return;
+    }
+
+    const storedResume = getStoredResumeById(resumeId);
     if (storedResume) {
       setResume(storedResume);
       return;
     }
 
-    const defaultResume = getResumeById(params.id);
+    const defaultResume = getResumeById(resumeId);
     setResume(defaultResume ?? null);
-  }, [params.id]);
+  }, [resumeId]);
 
   if (resume === undefined) {
     return (
@@ -91,10 +93,17 @@ export default function ResumeDetailsPage({ params }: Props) {
                 <FiShield className="h-4 w-4 text-red-400" />
                 CPF: {resume.cpf}
               </p>
-              <p className="inline-flex items-center gap-2 text-slate-300">
-                <FiLayers className="h-4 w-4 text-blue-400" />
-                Formação: {resume.education}
-              </p>
+              <div className="space-y-2">
+                <p className="inline-flex items-center gap-2 text-slate-300">
+                  <FiLayers className="h-4 w-4 text-blue-400" />
+                  Formação:
+                </p>
+                <div className="ml-7 space-y-1 text-slate-300">
+                  {resume.education.map((edu, index) => (
+                    <p key={index}>{edu.value}</p>
+                  ))}
+                </div>
+              </div>
             </div>
             <div className="space-y-3 rounded-3xl border border-slate-800 bg-slate-950 p-6">
               <h3 className="text-lg font-semibold text-white">Contato</h3>
@@ -114,20 +123,24 @@ export default function ResumeDetailsPage({ params }: Props) {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-slate-950">Resumo profissional</h2>
-            <p className="text-slate-600">{resume.summary}</p>
+            <h2 className="text-2xl font-semibold text-white">Resumo profissional</h2>
+            <p className="text-slate-300">{resume.summary}</p>
           </section>
 
           <section className="space-y-4">
-            <h3 className="text-lg font-semibold text-slate-950">Experiência</h3>
-            <p className="text-slate-600">{resume.experience}</p>
+            <h3 className="text-lg font-semibold text-white">Experiência</h3>
+            <div className="space-y-2 text-slate-300">
+              {resume.experience.map((exp, index) => (
+                <p key={index}>{exp.value}</p>
+              ))}
+            </div>
           </section>
 
           <section className="space-y-4">
-            <h3 className="text-lg font-semibold text-slate-950">Competências</h3>
+            <h3 className="text-lg font-semibold text-white">Competências</h3>
             <div className="flex flex-wrap gap-3">
               {resume.skills.map((skill) => (
-                <span key={skill} className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">
+                <span key={skill} className="rounded-full bg-slate-800 px-3 py-1 text-sm font-medium text-slate-200">
                   {skill}
                 </span>
               ))}
@@ -136,13 +149,13 @@ export default function ResumeDetailsPage({ params }: Props) {
         </Card>
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <button className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
+          <button className="rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
             Aprovar candidato
           </button>
-          <button className="rounded-full border border-input bg-transparent px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-slate-100">
+          <button className="rounded-full border border-slate-700 bg-transparent px-6 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800">
             Rejeitar candidato
           </button>
-          <button className="rounded-full border border-destructive bg-destructive/10 px-6 py-3 text-sm font-semibold text-destructive transition hover:bg-destructive/20">
+          <button className="rounded-full border border-red-500 bg-red-600/10 px-6 py-3 text-sm font-semibold text-red-400 transition hover:bg-red-600/20">
             Marcar para revisão
           </button>
         </div>
