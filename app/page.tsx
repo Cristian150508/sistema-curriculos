@@ -13,7 +13,7 @@ export default function Home() {
               Sistema de Currículos
             </p>
             <h1 className="max-w-3xl text-5xl font-semibold tracking-tight text-white sm:text-6xl">
-              Gerencie currículos com mais clareza e usabilidade.
+              Gerencie currículo7 com mais clareza e usabilidade.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-slate-300">
               Interface clean, responsiva e com navegação clara para cadastrar, listar e ver detalhes de candidatos.
